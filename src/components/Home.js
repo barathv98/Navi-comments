@@ -78,6 +78,7 @@ const Home = () => {
         },
     }));
   };
+  console.log(comments);
   return (
     <>
       <Header />
@@ -86,9 +87,6 @@ const Home = () => {
         <button className="root_button" onClick={onAdd}>Add</button>
       </div>
       <div className="comments_list_container">
-        {Object.keys(comments).length === 0 
-            ? <span>No comments yet!</span>
-            : <span>Total Comments: {Object.keys(comments).length}</span>}
         {enhancedComments.map((comment, key) => {
           return (
             <Comment key={key} 
