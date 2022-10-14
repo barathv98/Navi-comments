@@ -78,7 +78,6 @@ const Home = () => {
         },
     }));
   };
-  console.log(comments);
   return (
     <>
       <Header />
