@@ -57,11 +57,31 @@ const Home = () => {
     else
         setErrorRootComment(true);
   };
+  const deleteChild = (id, temp) => {
+    const { childCommments } = temp[id];
+    if (childCommments.length > 0) {
+      for(let x of childCommments) {
+        if (temp[x].childCommments.length > 0) {
+          return deleteChild(x, temp);
+        }
+        else {
+          delete temp[x];
+        }
+      }
+      return temp;
+    }
+    else {
+      delete temp[id];
+      return temp;
+    }
+  };
   const deleteComment = (id) => {
-    const temp = {...comments};
+    let temp = {...comments};
     const { childCommments: childOfDeleting, parentNodeId: parentOfDeleting }  = temp[id];
-    for (let x of childOfDeleting)
+    for (let x of childOfDeleting) {
+      temp = deleteChild(x, temp);
       delete temp[x];
+    }
     if (parentOfDeleting !== null)
       temp[parentOfDeleting].childCommments.splice(temp[parentOfDeleting].childCommments.indexOf(id),1)
     delete temp[id];
