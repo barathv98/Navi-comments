@@ -8,7 +8,7 @@ const InputBar = ({ setComment, value, showError, focusEvent }) => {
           onChange={(e) => setComment(e.target.value)}
           onFocus={focusEvent}
           placeholder="Add comment"
-          className={"input_bar " + (showError && "error")}
+          className={"input_bar" + (showError ? " error" : "")}
         />
     )
 }

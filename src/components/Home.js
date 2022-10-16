@@ -60,28 +60,24 @@ const Home = () => {
   const deleteChild = (id, temp) => {
     const { childCommments } = temp[id];
     if (childCommments.length > 0) {
-      for(let x of childCommments) {
-        if (temp[x].childCommments.length > 0) {
+      childCommments.forEach(x => {
+        if (temp[x].childCommments.length > 0)
           return deleteChild(x, temp);
-        }
-        else {
+        else
           delete temp[x];
-        }
-      }
-      return temp;
+      });
     }
-    else {
+    else
       delete temp[id];
-      return temp;
-    }
+    return temp;
   };
   const deleteComment = (id) => {
     let temp = {...comments};
     const { childCommments: childOfDeleting, parentNodeId: parentOfDeleting }  = temp[id];
-    for (let x of childOfDeleting) {
+    childOfDeleting.forEach(x => {
       temp = deleteChild(x, temp);
       delete temp[x];
-    }
+    });
     if (parentOfDeleting !== null)
       temp[parentOfDeleting].childCommments.splice(temp[parentOfDeleting].childCommments.indexOf(id),1)
     delete temp[id];
@@ -106,6 +102,9 @@ const Home = () => {
         <button className="root_button" onClick={onAdd}>Add</button>
       </div>
       <div className="comments_list_container">
+        {Object.keys(comments).length === 0 
+          ? <span>No comments yet!</span>
+          : <span>Total Comments: {Object.keys(comments).length}</span>}
         {enhancedComments.map((comment, key) => {
           return (
             <Comment key={key} 
